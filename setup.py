@@ -12,7 +12,7 @@ VERSION = '0.0.1'
 PACKAGE_NAME = 'meteosat'
 AUTHOR = 'Juseth Enrique Chancay Sánchez'
 AUTHOR_EMAIL = 'juseth.chancay'
-URL = 'https://github.com/afernandez119'
+URL = 'https://github.com/jusethCS/meteosat'
 
 LICENSE = 'GNU'
 DESCRIPTION = 'Library designed for downloading and managing hydro-meteorological data sourced from satellites and global models'
@@ -36,5 +36,4 @@ setup(
     license=LICENSE,
     packages=find_packages(),
     include_package_data=True,
-    py_modules=["meteosat.py"]
 )
