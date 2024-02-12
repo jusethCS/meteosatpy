@@ -72,6 +72,7 @@ class CHIRPS():
         mask = createMask(north=extent[0], south=extent[1], 
                           east=extent[2], west=extent[3])
         raster, meta = maskTIFF("temporal.tif", mask)
+        raster[raster<0] = np.nan
         writeRaster(raster, meta, path=outpath)
         
         # Remove the temporal file
