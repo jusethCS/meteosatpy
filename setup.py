@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-""" Setup file for meteosat. """
+""" Setup file for meteosatpy. """
 
 import pathlib
 from setuptools import find_packages, setup
@@ -9,19 +9,17 @@ from setuptools import find_packages, setup
 HERE = pathlib.Path(__file__).parent
 
 VERSION = '0.0.1'
-PACKAGE_NAME = 'meteosat'
+PACKAGE_NAME = 'meteosatpy'
 AUTHOR = 'Juseth Enrique Chancay Sánchez'
-AUTHOR_EMAIL = 'juseth.chancay'
-URL = 'https://github.com/jusethCS/meteosat'
+AUTHOR_EMAIL = 'juseth.chancay@gmail.com'
+URL = 'https://github.com/jusethCS/meteosatpy'
 
-LICENSE = 'GNU'
-DESCRIPTION = 'Library designed for downloading and managing hydro-meteorological data sourced from satellites and global models'
+LICENSE = 'MIT'
+DESCRIPTION = 'Library designed for downloading and managing meteorological data sourced from satellites and global models'
 LONG_DESCRIPTION = (HERE / "README.md").read_text(encoding='utf-8')
 LONG_DESC_TYPE = "text/markdown"
 
-INSTALL_REQUIRES = [
-      'pandas',
-      ]
+INSTALL_REQUIRES = ["fiona", "shapely", "pandas", "geopandas", "rasterio"]
 
 setup(
     name=PACKAGE_NAME,
