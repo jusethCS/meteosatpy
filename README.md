@@ -6,7 +6,7 @@
 
 
 ## What is it?
-**MeteoSatPy** is a Python library designed for downloading and managing hydro-meteorological data sourced from satellites and global models. It offers users efficient access to near-real-time and historical weather conditions globally. With features for data acquisition, processing, and analysis, METEOSAT is a versatile tool for meteorological research, forecasting, and decision-making across various sectors. 
+**MeteoSatPy** is a Python library designed for downloading and managing hydro-meteorological data sourced from satellites and global models. It offers users efficient access to near-real-time and historical weather conditions globally. With features for data acquisition, processing, and analysis, **MeteoSatPy** is a versatile tool for meteorological research, forecasting, and decision-making across various sectors. 
 
 ## Where to get it?
 The source code is currently hosted on GitHub at:
@@ -26,7 +26,7 @@ pip install meteosatpy
 - [geopandas](https://readthedocs.org/projects/geopandas/).- Analysis and manipulation of geographical data.
 - [rasterio](https://rasterio.readthedocs.io/en/stable/) .- Reads and writes raster formats and provides a Python API based on Numpy N-dimensional arrays and GeoJSON
 
-We recommended prior to install **meteosatpy** by using PyPi, you should create a new conda environment with dependencies
+We recommended prior to install **MeteoSatPy** by using PyPi, you should create a new conda environment with dependencies
 
 ```sh
 # Conda
