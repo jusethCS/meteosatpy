@@ -23,6 +23,7 @@ class CHIRPS():
         Args:
             date: A datetime object representing the date.
             timestep: A string specifying the timestep: "daily", "monthly", "annual"
+            outpath: A string specifying the path for output file.
             extent: An optional list specifying the extent.
         """
         # Validate timestep variable
