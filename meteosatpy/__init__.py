@@ -1,1 +1,1 @@
-from .chirps import CHIRPS
+from .main import *
