@@ -1,9 +1,4 @@
 # MeteoSatPy
-[![PyPI Latest Release](https://img.shields.io/pypi/v/pandas.svg)](https://pypi.org/project/pandas/)
-[![PyPI Downloads](https://img.shields.io/pypi/dm/pandas.svg?label=PyPI%20downloads)](https://pypi.org/project/pandas/)
-[![Conda Latest Release](https://anaconda.org/conda-forge/pandas/badges/version.svg)](https://anaconda.org/conda-forge/pandas) 
-[![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/pandas.svg?label=Conda%20downloads)](https://anaconda.org/conda-forge/pandas)
-
 
 ## What is it?
 **MeteoSatPy** is a Python library designed for downloading and managing hydro-meteorological data sourced from satellites and global models. It offers users efficient access to near-real-time and historical weather conditions globally. With features for data acquisition, processing, and analysis, **MeteoSatPy** is a versatile tool for meteorological research, forecasting, and decision-making across various sectors. 
@@ -13,11 +8,11 @@ The source code is currently hosted on GitHub at:
 https://github.com/jusethCS/meteosatpy
 
 Binary installers for the latest released version are available at the [Python
-Package Index (PyPI)](https://pypi.org/project/meteosatpy)
+Package Index (PyPI)](https://test.pypi.org/project/meteosatpy/)
 
 ```sh
 # PyPI
-pip install meteosatpy
+pip install -i https://test.pypi.org/simple/ meteosatpy
 ```
 
 ## Dependencies
@@ -30,7 +25,7 @@ We recommended prior to install **MeteoSatPy** by using PyPi, you should create 
 
 ```sh
 # Conda
-conda create -n [env_name] fiona shapely geopandas rasterio
+conda create -n [env_name] fiona shapely geopandas rasterio rclone
 ```
 
 ## Examples
