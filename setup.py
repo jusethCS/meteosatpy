@@ -19,7 +19,7 @@ DESCRIPTION = 'Library designed for downloading and managing meteorological data
 LONG_DESCRIPTION = (HERE / "README.md").read_text(encoding='utf-8')
 LONG_DESC_TYPE = "text/markdown"
 
-INSTALL_REQUIRES = ["fiona", "shapely", "pandas", "geopandas", "rasterio", "netcdf4", "h5netcdf", "xarray"]
+INSTALL_REQUIRES = ["fiona", "shapely", "pandas", "geopandas", "rasterio", "xarray", "netcdf4", "h5netcdf"]
 
 setup(
     name=PACKAGE_NAME,
