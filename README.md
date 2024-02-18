@@ -18,10 +18,11 @@ pip install meteosatpy
 - [fiona](https://fiona.readthedocs.io/en/stable/README.html): Streams simple feature data to and from GIS formats like GeoPackage and Shapefile.
 - [shapely](https://shapely.readthedocs.io/en/stable/): Manipulation and analysis of geometric objects in the Cartesian plane.
 - [geopandas](https://readthedocs.org/projects/geopandas/): Analysis and manipulation of geographical data.
-- [rasterio](https://rasterio.readthedocs.io/en/stable/): Reads and writes raster formats and provides a Python API based on Numpy N-dimensional arrays and GeoJSON.
+- [rasterio](https://rasterio.readthedocs.io/en/stable/): Reads and writes raster formats based on Numpy N-dimensional arrays.
+- [xarray](https://docs.xarray.dev/en/stable/): Works with labelled multi-dimensional arrays simple and efficient.
 - [netcdf4](https://unidata.github.io/netcdf4-python/): Reads and writes netCDF files compatible with older versions of the library.
 - [h5netcdf](https://h5netcdf.org/): A Python interface for the netCDF4 file-format that reads and writes local or remote HDF5 files.
-- [xarray](https://docs.xarray.dev/en/stable/): Works with labelled multi-dimensional arrays simple, efficient.
+
 
 Prior to installing **MeteoSatPy** using PyPi, we recommend creating a new conda environment with dependencies:
 
@@ -30,14 +31,14 @@ Prior to installing **MeteoSatPy** using PyPi, we recommend creating a new conda
 conda create -n [env_name] fiona shapely geopandas rasterio netcdf4 h5netcdf xarray
 ```
 
-If you need to download ["MSWEP"] (https://www.gloh2o.org/mswep/) data, you'll need to install [Rclone] (https://anaconda.org/conda-forge/rclone).
+If you need to download ["MSWEP"](https://www.gloh2o.org/mswep/) data, you'll need to install [Rclone](https://anaconda.org/conda-forge/rclone).
 
 ```sh
 # Conda
 conda install conda-forge::rclone
 ```
 
-To set up Rclone with a Google Drive account, we recommend watching this [tutorial] (https://www.youtube.com/watch?v=vPs9K_VC-lg). Note the MSWEP data are store on this Google Drive [repository] (https://drive.google.com/drive/u/0/folders/1Kok05OPVESTpyyan7NafR-2WwuSJ4TO9).
+To set up Rclone with a Google Drive account, we recommend watching this [tutorial](https://www.youtube.com/watch?v=vPs9K_VC-lg). Note the MSWEP data are store on this Google Drive [repository](https://drive.google.com/drive/u/0/folders/1Kok05OPVESTpyyan7NafR-2WwuSJ4TO9).
 
 
 ## Examples
