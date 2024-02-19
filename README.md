@@ -1,6 +1,8 @@
 # MeteoSatPy
 [![PyPI Latest Release](https://img.shields.io/pypi/v/meteosatpy.svg)](https://pypi.org/project/meteosatpy/)
 [![PyPI Downloads](https://img.shields.io/pypi/dm/meteosatpy.svg?label=PyPI%20downloads)](https://pypi.org/project/meteosatpy/)
+[![Conda Latest Release](https://anaconda.org/juseth.chancay/meteosatpy/badges/version.svg)](https://anaconda.org/juseth.chancay/meteosatpy) 
+[![Conda Downloads](https://anaconda.org/juseth.chancay/meteosatpy/badges/downloads.svg)](https://anaconda.org/juseth.chancay/meteosatpy)
 
 ## What is it?
 **MeteoSatPy** is a Python library designed for downloading and managing hydro-meteorological data sourced from satellites and global models. It offers users efficient access to near-real-time and historical weather conditions globally. With features for data acquisition, processing, and analysis. **MeteoSatPy** is a versatile tool for meteorological research, forecasting, and decision-making across various sectors.
