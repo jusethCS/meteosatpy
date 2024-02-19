@@ -1,4 +1,6 @@
 # MeteoSatPy
+[![PyPI Latest Release](https://img.shields.io/pypi/v/meteosatpy.svg)](https://pypi.org/project/meteosatpy/)
+[![PyPI Downloads](https://img.shields.io/pypi/dm/meteosatpy.svg?label=PyPI%20downloads)](https://pypi.org/project/meteosatpy/)
 
 ## What is it?
 **MeteoSatPy** is a Python library designed for downloading and managing hydro-meteorological data sourced from satellites and global models. It offers users efficient access to near-real-time and historical weather conditions globally. With features for data acquisition, processing, and analysis. **MeteoSatPy** is a versatile tool for meteorological research, forecasting, and decision-making across various sectors.
@@ -22,7 +24,6 @@ pip install meteosatpy
 - [xarray](https://docs.xarray.dev/en/stable/): Works with labelled multi-dimensional arrays simple and efficient.
 - [netcdf4](https://unidata.github.io/netcdf4-python/): Reads and writes netCDF files compatible with older versions of the library.
 - [h5netcdf](https://h5netcdf.org/): A Python interface for the netCDF4 file-format that reads and writes local or remote HDF5 files.
-
 
 Prior to installing **MeteoSatPy** using PyPi, we recommend creating a new conda environment with dependencies:
 
@@ -61,7 +62,7 @@ ch.download(
 # Download CMORPH data
 cm = CMORPH()
 cm.download(
-    date=dates[i], 
+    date=date, 
     timestep="daily", 
     outpath=date.strftime("cmorph_%Y-%m-%d.tif")
 )

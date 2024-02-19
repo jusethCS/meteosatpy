@@ -15,7 +15,7 @@ AUTHOR_EMAIL = 'juseth.chancay@gmail.com'
 URL = 'https://github.com/jusethCS/meteosatpy'
 
 LICENSE = 'MIT'
-DESCRIPTION = 'Library designed for downloading and managing meteorological data sourced from satellites and global models'
+DESCRIPTION = 'Library designed for downloading and managing meteorological data sourced from satellites and global models.'
 LONG_DESCRIPTION = (HERE / "README.md").read_text(encoding='utf-8')
 LONG_DESC_TYPE = "text/markdown"
 
