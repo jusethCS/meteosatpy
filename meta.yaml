@@ -1,19 +1,16 @@
 package:
   name: meteosatpy
-  version: "0.0.4"
+  version: "0.0.2"
 
 source:
-  url: https://test-files.pythonhosted.org/packages/cb/e3/0c3ef4e5fbdcd34ee2fae9ebad0c542a9eb3c5fd5ed67c36fac6681cd02a/meteosatpy-0.0.4.tar.gz
-  sha256: 9d816f57652eaf4655f65ce22b4b137e6c5e0f5d840f8b9d32cf4100d881691a
-  md5: ccd04dee6f78b3520de6aab2391a4323
+  url: https://files.pythonhosted.org/packages/6c/fa/61e5ea8c64e91ef8effed923ab97a407bb5fa1c70d0db12cf86cbbafd238/meteosatpy-0.0.2.tar.gz
+  sha256: 81119f97ad7786cc2c134844950d40fc23c79be5d14223d54bf32a91a46e7f4b
+  md5: 58702e50922eeb74abc9bc676e412f42
 
 build:
-  number: 0
+  number: 1
   noarch: python
   script: python -m pip install .
-  channels:
-    - defaults
-    - conda-forge
 
 requirements:
   host:
