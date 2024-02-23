@@ -2,6 +2,7 @@ import os
 import gzip
 import xarray
 import rasterio
+import subprocess
 import numpy as np
 import geopandas as gpd
 from rasterio.mask import mask
@@ -158,3 +159,19 @@ def netcdf2TIFF(path:str, var:str, time:str, isflip:bool, out_path:str = None,
     # Save data as GeoTIFF file
     with rasterio.open(out_path, 'w', **meta) as dst:
         dst.write(data, 1)
+
+
+def is_installed(program):
+    """
+    Determine if a program is installed
+    
+    Args:
+        program: name of the program
+    """
+    try:
+        subprocess.check_output([program, '--version'])
+        return True
+    except FileNotFoundError:
+        return False
+    except subprocess.CalledProcessError:
+        return True 

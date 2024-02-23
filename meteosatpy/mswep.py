@@ -3,7 +3,7 @@ import sys
 import shutil
 import datetime as dt
 from .warnings import ignoreWarnings
-from .utils import netcdf2TIFF, createMask, maskTIFF, writeRaster
+from .utils import netcdf2TIFF, createMask, maskTIFF, writeRaster, is_installed
 
 class MSWEP():
     """
@@ -13,6 +13,15 @@ class MSWEP():
     def __init__(self, root:str = ".") -> None:
         # Ignore warnings produced by Fiona Deprecation
         ignoreWarnings()
+
+        # Determine if exists rclone dependency
+        exist_rclone = is_installed("rclone")
+        if not exist_rclone:
+            err = "Rclone is not installed. Please install it using: 'pip install rclone'"
+            err = f"{err} or 'conda install conda-forge::rclone'. To set up Rclone with a"
+            err = f"{err} Google Drive account, we recommend watching this video tutorial"
+            err = f"{err} https://www.youtube.com/watch?v=vPs9K_VC-lg"
+            raise ValueError(err)
     
     def download(self, date:dt.datetime, timestep:str, dataset:str, outpath:str, 
                  extent:list = None) -> None:
