@@ -8,7 +8,7 @@ from setuptools import find_packages, setup
 
 HERE = pathlib.Path(__file__).parent
 
-VERSION = '0.0.1'
+VERSION = '0.0.4'
 PACKAGE_NAME = 'meteosatpy'
 AUTHOR = 'Juseth Enrique Chancay Sánchez'
 AUTHOR_EMAIL = 'juseth.chancay@gmail.com'
@@ -19,7 +19,7 @@ DESCRIPTION = 'Library designed for downloading and managing meteorological data
 LONG_DESCRIPTION = (HERE / "README.md").read_text(encoding='utf-8')
 LONG_DESC_TYPE = "text/markdown"
 
-INSTALL_REQUIRES = ["fiona", "shapely", "pandas", "geopandas", "rasterio", "xarray", "netcdf4", "h5netcdf"]
+INSTALL_REQUIRES = ["rasterio", "xarray", "geopandas"]
 
 setup(
     name=PACKAGE_NAME,

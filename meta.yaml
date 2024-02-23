@@ -1,0 +1,39 @@
+package:
+  name: meteosatpy
+  version: "0.0.4"
+
+source:
+  url: https://test-files.pythonhosted.org/packages/cb/e3/0c3ef4e5fbdcd34ee2fae9ebad0c542a9eb3c5fd5ed67c36fac6681cd02a/meteosatpy-0.0.4.tar.gz
+  sha256: 9d816f57652eaf4655f65ce22b4b137e6c5e0f5d840f8b9d32cf4100d881691a
+  md5: ccd04dee6f78b3520de6aab2391a4323
+
+build:
+  number: 0
+  noarch: python
+  script: python -m pip install .
+  channels:
+    - defaults
+    - conda-forge
+
+requirements:
+  host:
+    - python 3.9.*
+    - pip
+  run:
+    - python
+    - rasterio
+    - xarray
+    - geopandas
+
+test:
+  imports:
+    - meteosatpy
+  requires:
+    - python 
+
+about:
+  home: https://github.com/jusethCS/meteosatpy
+  license: MIT
+  license_family: MIT
+  summary: Library designed for downloading and managing meteorological data sourced from satellites and global models.
+  description: MeteoSatPy is a Python library designed for downloading and managing hydro-meteorological data sourced from satellites and global models. It offers users efficient access to near-real-time and historical weather conditions globally. With features for data acquisition, processing, and analysis. MeteoSatPy is a versatile tool for meteorological research, forecasting, and decision-making across various sectors.
