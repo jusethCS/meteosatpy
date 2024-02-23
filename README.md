@@ -11,30 +11,30 @@
 The source code is currently hosted on GitHub at:
 [https://github.com/jusethCS/meteosatpy](https://github.com/jusethCS/meteosatpy)
 
-Binary installers for the latest released version are available at the [Python Package Index (PyPI)](https://pypi.org/project/meteosatpy/)
+Binary installers for the latest released version are available at the [Python Package Index (PyPI)](https://pypi.org/project/meteosatpy/) and on [Conda](https://anaconda.org/juseth.chancay/meteosatpy)
 
 ```sh
 # PyPI
 pip install meteosatpy
 ```
+```sh
+# Conda
+conda install juseth.chancay::meteosatpy
+```
 
 ## Dependencies
-- [fiona](https://fiona.readthedocs.io/en/stable/README.html): Streams simple feature data to and from GIS formats like GeoPackage and Shapefile.
-- [shapely](https://shapely.readthedocs.io/en/stable/): Manipulation and analysis of geometric objects in the Cartesian plane.
-- [geopandas](https://readthedocs.org/projects/geopandas/): Analysis and manipulation of geographical data.
 - [rasterio](https://rasterio.readthedocs.io/en/stable/): Reads and writes raster formats based on Numpy N-dimensional arrays.
 - [xarray](https://docs.xarray.dev/en/stable/): Works with labelled multi-dimensional arrays simple and efficient.
-- [netcdf4](https://unidata.github.io/netcdf4-python/): Reads and writes netCDF files compatible with older versions of the library.
-- [h5netcdf](https://h5netcdf.org/): A Python interface for the netCDF4 file-format that reads and writes local or remote HDF5 files.
+- [geopandas](https://readthedocs.org/projects/geopandas/): Analysis and manipulation of geographical data.
 
 Prior to installing **MeteoSatPy** using PyPi, we recommend creating a new conda environment with dependencies:
 
 ```sh
 # Conda
-conda create -n [env_name] fiona shapely geopandas rasterio netcdf4 h5netcdf xarray
+conda create -n [env_name] geopandas rasterio xarray
 ```
 
-If you need to download ["MSWEP"](https://www.gloh2o.org/mswep/) data, you'll need to install [Rclone](https://anaconda.org/conda-forge/rclone).
+If you need to download [MSWEP](https://www.gloh2o.org/mswep/) data, you'll need to install [Rclone](https://anaconda.org/conda-forge/rclone).
 
 ```sh
 # Conda
@@ -48,13 +48,13 @@ To set up Rclone with a Google Drive account, we recommend watching this [tutori
 
 ```python
 import datetime as dt
-from meteosatpy import *
+import meteosatpy
 
 # Target date
 date = dt.datetime(2020, 1, 1) # year, month, day
 
 # Download CHIRPS data
-ch = CHIRPS()
+ch = meteosatpy.CHIRPS()
 ch.download(
     date=date, 
     timestep="daily", 
@@ -62,7 +62,7 @@ ch.download(
 )
 
 # Download CMORPH data
-cm = CMORPH()
+cm = meteosatpy.CMORPH()
 cm.download(
     date=date, 
     timestep="daily", 
@@ -70,7 +70,7 @@ cm.download(
 )
 
 # Download MSWEP data
-mw = MSWEP()
+mw = meteosatpy.MSWEP()
 mw.download(
     date=dates[i], 
     timestep="daily", 
