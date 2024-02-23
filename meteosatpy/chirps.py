@@ -1,9 +1,10 @@
 import os
 import sys
-import urllib
+import shutil
+import urllib.request
 import datetime as dt
-from .utils import *
-from .warnings import *
+from .warnings import ignoreWarnings
+from .utils import ungzip, createMask, maskTIFF, writeRaster
 
 
 class CHIRPS():
@@ -32,13 +33,10 @@ class CHIRPS():
             raise ValueError(err)
         
         # Validate extent variable
-        if extent == None:
-            extent = (50, -50, 180, -180)
-        else:
-            if not len(extent) == 4:
-                err = "Invalid extent. Please provide a list with coordinates: 'north'"
-                err = f"{err}, 'south', 'east', 'west'"
-                raise ValueError(err)
+        if extent is not None and len(extent) != 4:
+            err = "Invalid extent. Please provide a list with coordinates: 'north'"
+            err = f"{err}, 'south', 'east', 'west'"
+            raise ValueError(err)
 
         # Server variables
         server = "https://data.chc.ucsb.edu"
@@ -70,11 +68,14 @@ class CHIRPS():
         ungzip("temporal.tif.gz")
 
         # Mask the raster file to required extent
-        mask = createMask(north=extent[0], south=extent[1], 
-                          east=extent[2], west=extent[3])
-        raster, meta = maskTIFF("temporal.tif", mask)
-        raster[raster<0] = np.nan
-        writeRaster(raster, meta, path=outpath)
+        if extent is None:
+            shutil.copyfile("temporal.tif", outpath)
+        else:
+            mask = createMask(north=extent[0], south=extent[1], 
+                              east=extent[2], west=extent[3])
+            raster, meta = maskTIFF("temporal.tif", mask)
+            raster[raster<0] = 0
+            writeRaster(raster, meta, path=outpath)
         
         # Remove the temporal file
         os.remove("temporal.tif")
@@ -82,6 +83,4 @@ class CHIRPS():
         # Print status mensages
         print(f"Downloaded CHIRPS {timestep} file: {date}", end='\r')
         sys.stdout.flush()
-
-
 

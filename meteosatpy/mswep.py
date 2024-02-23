@@ -1,10 +1,9 @@
 import os
 import sys
-import urllib
+import shutil
 import datetime as dt
-from .utils import *
-from .warnings import *
-
+from .warnings import ignoreWarnings
+from .utils import netcdf2TIFF, createMask, maskTIFF, writeRaster
 
 class MSWEP():
     """
@@ -38,13 +37,10 @@ class MSWEP():
             raise ValueError(err)
         
         # Validate extent variable
-        if extent == None:
-            extent = (90, -90, -180, 180)
-        else:
-            if not len(extent) == 4:
-                err = "Invalid extent. Please provide a list with coordinates:"
-                err = f"{err} 'north', 'south', 'east', 'west'"
-                raise ValueError(err)
+        if extent is not None and len(extent) != 4:
+            err = "Invalid extent. Please provide a list with coordinates: 'north'"
+            err = f"{err}, 'south', 'east', 'west'"
+            raise ValueError(err)
         
         # Determine filedate based on timestep
         if timestep == "3hourly":
@@ -72,20 +68,23 @@ class MSWEP():
         # Parse NC to TIFF
         netcdf2TIFF("temporal.nc", var="precipitation", time=date.strftime("%Y-%m-%d %M:00"), 
                     isflip=False, correction=False)
-        
+
         # Mask the raster file to required extent
-        mask = createMask(north=extent[0], south=extent[1], 
-                          east=extent[2], west=extent[3])
-        raster, meta = maskTIFF("temporal.tif", mask)
-        raster[raster<0] = np.nan
-        writeRaster(raster, meta, path=outpath)
+        if extent is None:
+            shutil.copyfile("temporal.tif", outpath)
+        else:
+            mask = createMask(north=extent[0], south=extent[1], 
+                              east=extent[2], west=extent[3])
+            raster, meta = maskTIFF("temporal.tif", mask)
+            raster[raster<0] = 0
+            writeRaster(raster, meta, path=outpath)
         
         # Remove the temporal file
         os.remove("temporal.tif")
-        #os.remove("temporal.nc")
+        os.remove("temporal.nc")
 
         # Print status mensages
-        print(f"Downloaded CMORPH {timestep} file: {date}", end='\r')
+        print(f"Downloaded MSWEP {timestep} file: {date}", end='\r')
         sys.stdout.flush()
 
 

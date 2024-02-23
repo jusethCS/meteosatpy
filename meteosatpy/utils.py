@@ -2,13 +2,10 @@ import os
 import gzip
 import xarray
 import rasterio
-import subprocess
 import numpy as np
 import geopandas as gpd
 from rasterio.mask import mask
 from rasterio.transform import from_origin
-from fiona.crs import from_epsg
-from shapely.geometry import box
 
 
 def ungzip(path:str, remove:bool = True) -> None:
@@ -39,18 +36,23 @@ def createMask(north:float, south:float, east:float, west:float,
     Create the mask for area clipping
     
     Args:
-        north: max coordinate in X axis (top)
-        south: min coordinate in X axis (bottom)
-        east:  max coordinate in Y axis (rigth)
-        west:  min coordinate in Y axis (rigth)
+        north: max coordinate in Y axis (top)
+        south: min coordinate in Y axis (bottom)
+        east:  max coordinate in X axis (right)
+        west:  min coordinate in X axis (left)
         epsg:  SRC coordinate projection. Default: 4326
 
     Return:
         gdf: a geopandas dataframe with the mask
     """
-    bbox = box(west, south, east, north)
-    gdf = gpd.GeoDataFrame({'geometry':[bbox]}, crs = from_epsg(epsg))
-    return(gdf)
+    # Create a GeoDataFrame with a single rectangular polygon
+    gdf = gpd.GeoDataFrame(geometry=[
+                gpd.polygon.Polygon([
+                    (west, south), (east, south), 
+                    (east, north), (west, north)])])
+    # Set the coordinate reference system (CRS)
+    gdf.crs = f"EPSG:{epsg}"
+    return gdf
 
 
 
@@ -95,6 +97,7 @@ def writeRaster(raster, meta, path:str) -> None:
     """
     with rasterio.open(path, "w", **meta) as r:
         r.write(raster)
+
 
 
 def netcdf2TIFF(path:str, var:str, time:str, isflip:bool, out_path:str = None, 
@@ -155,19 +158,3 @@ def netcdf2TIFF(path:str, var:str, time:str, isflip:bool, out_path:str = None,
     # Save data as GeoTIFF file
     with rasterio.open(out_path, 'w', **meta) as dst:
         dst.write(data, 1)
-
-
-def is_installed(program):
-    """
-    Determine if a program is installed
-    
-    Args:
-        program: name of the program
-    """
-    try:
-        subprocess.check_output([program, '--version'])
-        return True
-    except FileNotFoundError:
-        return False
-    except subprocess.CalledProcessError:
-        return True 
