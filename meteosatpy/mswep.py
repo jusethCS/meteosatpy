@@ -75,8 +75,7 @@ class MSWEP():
             os.rename(file_name, "temporal.nc")
 
         # Parse NC to TIFF
-        netcdf2TIFF("temporal.nc", var="precipitation", time=date.strftime("%Y-%m-%d %M:00"), 
-                    isflip=False, correction=False)
+        netcdf2TIFF("temporal.nc", var="precipitation", time=date.strftime("%Y-%m-%d %M:00"))
 
         # Mask the raster file to required extent
         if extent is None:
