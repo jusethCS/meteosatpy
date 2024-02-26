@@ -26,12 +26,13 @@ conda install juseth.chancay::meteosatpy
 - [rasterio](https://rasterio.readthedocs.io/en/stable/): Reads and writes raster formats based on Numpy N-dimensional arrays.
 - [xarray](https://docs.xarray.dev/en/stable/): Works with labelled multi-dimensional arrays simple and efficient.
 - [geopandas](https://readthedocs.org/projects/geopandas/): Analysis and manipulation of geographical data.
+- [request](https://requests.readthedocs.io/en/latest/): HTTP library for making requests and working with web APIs.
 
 Prior to installing **MeteoSatPy** using PyPi, we recommend creating a new conda environment with dependencies:
 
 ```sh
 # Conda
-conda create -n [env_name] geopandas rasterio xarray
+conda create -n [env_name] geopandas rasterio xarray request
 ```
 
 If you need to download [MSWEP](https://www.gloh2o.org/mswep/) data, you'll need to install [Rclone](https://anaconda.org/conda-forge/rclone).
@@ -51,7 +52,7 @@ import datetime as dt
 import meteosatpy
 
 # Target date
-date = dt.datetime(2020, 1, 1) # year, month, day
+date = dt.datetime(2010, 1, 1) # year, month, day
 
 # Download CHIRPS data
 ch = meteosatpy.CHIRPS()
@@ -72,8 +73,18 @@ cm.download(
 # Download MSWEP data
 mw = meteosatpy.MSWEP()
 mw.download(
-    date=dates[i], 
+    date=date, 
     timestep="daily", 
     dataset="Past",
     outpath=date.strftime("mswep_%Y-%m-%d.tif"))
+
+# Download IMERG v07 final run
+im = meteosatpy.IMERG(user="username", pw="pass")
+im.download(
+    date=date, 
+    version="v07", 
+    run="final", 
+    timestep="daily", 
+    outpath=date.strftime("imerg_%Y-%m-%d.tif")
+)
 ```

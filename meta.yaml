@@ -1,11 +1,11 @@
 package:
   name: meteosatpy
-  version: "0.0.2"
+  version: "0.0.3"
 
 source:
-  url: https://files.pythonhosted.org/packages/6c/fa/61e5ea8c64e91ef8effed923ab97a407bb5fa1c70d0db12cf86cbbafd238/meteosatpy-0.0.2.tar.gz
-  sha256: 81119f97ad7786cc2c134844950d40fc23c79be5d14223d54bf32a91a46e7f4b
-  md5: 58702e50922eeb74abc9bc676e412f42
+  url: https://files.pythonhosted.org/packages/cc/ba/b4d26ea91efa167b0920b05a1aa95628bf02cb7fe7b284bcf8a23229a447/meteosatpy-0.0.3.tar.gz
+  sha256: 7819659ab003eb0bed8fdfe254a5d58cbed47772d6ef403cfea2c95e257a4a86
+  md5: b497634c7e5ccb693e41fb3af42f7071
 
 build:
   number: 1
@@ -21,6 +21,7 @@ requirements:
     - rasterio
     - xarray
     - geopandas
+    - requests
 
 test:
   imports:
