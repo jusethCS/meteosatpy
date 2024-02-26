@@ -1,6 +1,8 @@
 import os
 import gzip
+import shutil
 import xarray
+import platform
 import rasterio
 import subprocess
 import numpy as np
@@ -101,8 +103,9 @@ def writeRaster(raster, meta, path:str) -> None:
 
 
 
-def netcdf2TIFF(path:str, var:str, time:str, isflip:bool, out_path:str = None, 
-                correction:bool = False) -> None:
+def netcdf2TIFF(path:str, var:str, time:str, out_path:str = None, isflip:bool = False,
+                correction:bool = False, multidimention:bool = False,
+                traspose:bool = False) -> None:
     """
     Parse a netcdf file to GeoTIFF
     
@@ -111,7 +114,9 @@ def netcdf2TIFF(path:str, var:str, time:str, isflip:bool, out_path:str = None,
         var: Selected variable to write in the GeoTIFF file
         time: Selected timestamp (yyyy-mm-dd HH:MM) to write in the GeoTIFF
         out_path: Path where GeoTIFF will be write.
+        isflip: 
         correction: Conditional to data correction for CMORPH case
+        multidim: Coditional, file contains aditional dimensions. For IMERG.
     """
     # Remove the extension
     if out_path==None:
@@ -121,8 +126,12 @@ def netcdf2TIFF(path:str, var:str, time:str, isflip:bool, out_path:str = None,
     ds = xarray.open_dataset(path)
     ds = ds.sel(time=time)
 
-    # Extract data and coordinates
+    # Extract data
     data = ds[var].values
+    if multidimention:
+        data = data[0]
+    
+    # Extract coordinates
     lat = ds['lat'].values
     lon = ds['lon'].values
 
@@ -134,11 +143,19 @@ def netcdf2TIFF(path:str, var:str, time:str, isflip:bool, out_path:str = None,
     lon_min = lon.min() - res_lon/2
     lat_max = lat.max() + res_lat/2
 
+    # Traspose
+    if traspose:
+        data = np.transpose(data)
+
     # Correction
-    if correction==True:
+    if correction:
         mcd = data.shape[1] // 2
         data = np.hstack((data[:, mcd:], data[:, :mcd]))
         lon_min = lon_min - 180
+
+    # Flipping the image upright in the axis = 0 i.e., vertically
+    if isflip:
+        data = np.flip(data,0)
     
     # Transform the projection considering correction
     transform = from_origin(lon_min, lat_max, res_lon, res_lat)
@@ -152,10 +169,6 @@ def netcdf2TIFF(path:str, var:str, time:str, isflip:bool, out_path:str = None,
             "count" : 1, 
             "dtype" :str(data.dtype)}
     
-    # Flipping the image upright in the axis = 0 i.e., vertically
-    if isflip:
-        data = np.flip(data,0)
-
     # Save data as GeoTIFF file
     with rasterio.open(out_path, 'w', **meta) as dst:
         dst.write(data, 1)
@@ -175,3 +188,41 @@ def is_installed(program):
         return False
     except subprocess.CalledProcessError:
         return True 
+    
+
+def min_code(date):
+    hora = date.hour
+    minuto = date.minute
+    codigo = hora * 60 + minuto
+    return f"{codigo:04d}"
+
+
+
+def earth_data_explorer_credential(username, password):
+    # Earthdata URL to call for authentication 
+    urs = 'urs.earthdata.nasa.gov'
+
+    # Determine the root directory
+    homeDir = os.path.expanduser("~") + os.sep
+
+    # Write files
+    with open(homeDir + '.netrc', 'w') as file:
+        file.write('machine {} login {} password {}'.format(urs, username, password))
+        file.close()
+    with open(homeDir + '.urs_cookies', 'w') as file:
+        file.write('')
+        file.close()
+    with open(homeDir + '.dodsrc', 'w') as file:
+        file.write('HTTP.COOKIEJAR={}.urs_cookies\n'.format(homeDir))
+        file.write('HTTP.NETRC={}.netrc'.format(homeDir))
+        file.close()
+
+    print('Saved .netrc, .urs_cookies, and .dodsrc to:', homeDir)
+
+    # Set appropriate permissions for Linux/macOS
+    if platform.system() != "Windows":
+        subprocess.Popen('chmod og-rw ~/.netrc', shell=True)
+    else:
+        # Copy dodsrc to working directory in Windows  
+        shutil.copy2(homeDir + '.dodsrc', os.getcwd())
+        print('Copied .dodsrc to:', os.getcwd())
