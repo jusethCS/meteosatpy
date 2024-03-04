@@ -226,3 +226,56 @@ def earth_data_explorer_credential(username, password):
         # Copy dodsrc to working directory in Windows  
         shutil.copy2(homeDir + '.dodsrc', os.getcwd())
         print('Copied .dodsrc to:', os.getcwd())
+
+
+
+
+def get_params_persiann(date, timestep, data_type):
+    """
+    Get parameters for PERSIANN data download based on date, timestep, and data type.
+
+    Args:
+        date (datetime): A datetime object representing the date.
+        timestep (str): A string specifying the timestep: "hourly", "3hourly", 
+                        "6hourly", "daily", "monthly", or "yearly".
+        data_type (str): A string specifying the data type: "PERSIANN", "CCS", 
+                        "CDR", or "PDIR".
+
+    Returns:
+        dict: A dictionary containing parameters for PERSIANN data download.
+    """
+    if timestep == "hourly":
+        ds = date.strftime("%Y%m%d%H")
+        dtm = "1hrly"
+        dtx = "1h"
+    elif timestep == "3hourly":
+        ds = date.strftime("%Y%m%d%H")
+        dtm = "3hrly"
+        dtx = "3h"
+    elif timestep == "6hourly":
+        ds = date.strftime("%Y%m%d%H")
+        dtm = "6hrly"
+        dtx = "6h"
+    elif timestep == "daily":
+        ds = date.strftime("%Y%m%d")
+        dtm = timestep
+        dtx = "1d"
+    elif timestep == "monthly":
+        ds = date.strftime("%Y%m")
+        dtm = timestep
+        dtx = "1m"
+    elif timestep == "yearly":
+        ds = date.strftime("%Y")
+        dtm = timestep
+        dtx = "1y"
+
+    params = {
+        'startDate': ds,
+        'endDate': ds,
+        'timestep': dtm,
+        'timestepAlt': dtx,
+        'dataType': data_type,
+        'format': "Tif",
+        'compression': "zip"
+    }
+    return params
