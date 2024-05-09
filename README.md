@@ -32,7 +32,7 @@ Prior to installing **MeteoSatPy** using PyPi, we recommend creating a new conda
 
 ```sh
 # Conda
-conda create -n [env_name] geopandas rasterio xarray request
+conda create -n [env_name] geopandas rasterio xarray requests
 ```
 
 If you need to download [MSWEP](https://www.gloh2o.org/mswep/) data, you'll need to install [Rclone](https://anaconda.org/conda-forge/rclone).

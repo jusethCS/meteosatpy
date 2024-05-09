@@ -54,18 +54,24 @@ class CHIRPS():
         # Construct download URL
         if timestep == "daily":
             url = f"{server}/{product}/p05/{year}/chirps-v2.0.{filedate}.tif.gz"
-        else:
+        elif timestep == "monthly":
             url = f"{server}/{product}/chirps-v2.0.{filedate}.tif.gz"
+        else:
+            url = f"{server}/{product}/chirps-v2.0.{filedate}.tif"
         
         # Download and ungzip file
         try:
-            urllib.request.urlretrieve(url, "temporal.tif.gz")        
+            if timestep != "annual":
+                urllib.request.urlretrieve(url, "temporal.tif.gz")
+            else:
+                urllib.request.urlretrieve(url, "temporal.tif")     
         except Exception as e:
             print(f"Error occurred while downloading: {e}")
             return
             
         # Ungzip the file
-        ungzip("temporal.tif.gz")
+        if timestep != "annual":
+            ungzip("temporal.tif.gz")
 
         # Mask the raster file to required extent
         if extent is None:
