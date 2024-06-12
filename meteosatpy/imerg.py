@@ -114,17 +114,29 @@ class IMERG():
 
         elif run in ["late", "early"]:
             multidim = True
-
-            if timestep == "30min":
-                url = f"{server2}/GPM_3IMERG{'HHL' if run == 'late' else 'HHE'}.{vv}/{year}/{julian_day}"
-                url = f"{url}/3B-HHR-{'L' if run == 'late' else 'E'}.MS.MRG.3IMERG.{actual}-S{ss}-E{ee}.{code}.V{vv}B.HDF5.nc4?"
-                
-            elif timestep == "daily":
-                url = f"{server}/GPM_3IMERG{'DL' if run == 'late' else 'DE'}.{vv}/{year}/{month}"
-                url = f"{url}/3B-DAY-{'L' if run == 'late' else 'E'}.MS.MRG.3IMERG.{actual}-S000000-E235959.V{vv}.nc4.nc4?"
+            if version == "v06":
+                if timestep == "30min":
+                    url = f"{server2}/GPM_3IMERG{'HHL' if run == 'late' else 'HHE'}.{vv}/{year}/{julian_day}"
+                    url = f"{url}/3B-HHR-{'L' if run == 'late' else 'E'}.MS.MRG.3IMERG.{actual}-S{ss}-E{ee}.{code}.V{vv}B.HDF5.nc4?"
+                elif timestep == "daily":
+                    url = f"{server}/GPM_3IMERG{'DL' if run == 'late' else 'DE'}.{vv}/{year}/{month}"
+                    url = f"{url}/3B-DAY-{'L' if run == 'late' else 'E'}.MS.MRG.3IMERG.{actual}-S000000-E235959.V{vv}.nc4.nc4?"
+                else:
+                    raise("IMERG late- and early-run data do not include monthly information.")
             
-            else:
-                raise("IMERG late- and early-run data do not include monthly information.")
+            if version == "v07":
+                if timestep == "30min":
+                    url = f"{server2}/GPM_3IMERG{'HHL' if run == 'late' else 'HHE'}.{vv}/{year}/{julian_day}"
+                    url = f"{url}/3B-HHR-{'L' if run == 'late' else 'E'}.MS.MRG.3IMERG.{actual}-S{ss}-E{ee}.{code}.V{vv}B.HDF5.nc4?"
+                    
+                elif timestep == "daily":
+                    multidim = False
+                    url = f"{server2}/GPM_3IMERG{'DL' if run == 'late' else 'DE'}.{vv}/{year}/{month}"
+                    url = f"{url}/3B-DAY-{'L' if run == 'late' else 'E'}.MS.MRG.3IMERG.{actual}-S000000-E235959.V{vv}B.nc4.nc4?"
+                
+                else:
+                    raise("IMERG late- and early-run data do not include monthly information.")
+
 
         # Download data
         response = requests.get(url)
@@ -135,6 +147,7 @@ class IMERG():
             raise("Error occurred while downloading")
 
         # Parse NC to TIFF
+        print(multidim)
         netcdf2TIFF("temporal.nc", var=var_name, time=date.strftime("%Y-%m-%d %M:00"), 
                     multidimention = multidim, traspose = True, isflip = True)
         
